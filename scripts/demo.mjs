@@ -1,0 +1,25 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { parseRss, deduplicate } from '../src/discovery/rss.mjs';
+import { createEditorialBrief, demoDraft } from '../src/editorial/planner.mjs';
+import { validateDraft } from '../src/validation/safety.mjs';
+import { publish } from '../src/publishers/publisher.mjs';
+import { createLogger } from '../src/monitoring/logger.mjs';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const feed = await fs.readFile(path.join(root, 'examples/demo-feed.xml'), 'utf8');
+const sites = JSON.parse(await fs.readFile(path.join(root, 'config.example/sites.json'), 'utf8'));
+const logger = createLogger();
+const [candidate] = deduplicate(parseRss(feed));
+logger.log('rss_scanned', { records: 2 });
+const brief = createEditorialBrief(candidate, { ...sites[0], topicKeywords: ['editorial', 'automation'] });
+const draft = demoDraft(brief);
+const review = validateDraft({ draft, source: brief.source });
+logger.log('draft_reviewed', { status: review.status, reasons: review.reasons });
+const publication = await publish({ adapter: sites[0].publishAdapter, payload: draft });
+logger.log('publication_attempted', publication);
+const output = { brief, draft, review, publication, log: logger.events() };
+await fs.mkdir(path.join(root, 'previews'), { recursive: true });
+await fs.writeFile(path.join(root, 'previews/demo-output.json'), `${JSON.stringify(output, null, 2)}\n`);
+console.log('Demo completed: previews/demo-output.json');

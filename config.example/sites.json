@@ -1,0 +1,10 @@
+[
+  {
+    "id": "demo-site",
+    "name": "Example Editorial Site",
+    "baseUrl": "https://example.com",
+    "contentProfile": "Practical, evidence-led digital marketing analysis.",
+    "publishAdapter": "ftp",
+    "ftpPrefix": "FTP"
+  }
+]

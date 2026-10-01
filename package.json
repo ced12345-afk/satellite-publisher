@@ -1,0 +1,15 @@
+{
+  "name": "satellite-publisher",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "A safe, dry-run demonstration of an agentic multi-site publishing workflow.",
+  "scripts": {
+    "demo": "node scripts/demo.mjs",
+    "test": "node --test",
+    "lint": "node --check scripts/demo.mjs && node --check src/discovery/rss.mjs && node --check src/editorial/planner.mjs && node --check src/validation/safety.mjs && node --check src/publishers/publisher.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "demo-industry-feed",
+    "name": "Example Industry Feed",
+    "type": "rss",
+    "url": "https://industry.example/feed.xml",
+    "enabled": true,
+    "maxItems": 10,
+    "topicKeywords": ["search", "content", "automation"]
+  }
+]

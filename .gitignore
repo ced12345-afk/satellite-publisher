@@ -1,0 +1,27 @@
+# Environment and credentials
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+*.pem
+*.key
+*.p12
+*token*.json
+*oauth*.json
+
+# Runtime data: never commit a production queue, article, or log
+storage/
+logs/*.log
+logs/*.json
+!logs/.gitkeep
+drafts/
+published/
+previews/
+
+# Local/editor files
+node_modules/
+.DS_Store
+.idea/
+.vscode/
+coverage/

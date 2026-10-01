@@ -1,0 +1,5 @@
+[
+  {"at":"2026-10-01T10:00:00.000Z","event":"rss_scanned","detail":"2 fictional items parsed"},
+  {"at":"2026-10-01T10:00:01.000Z","event":"topic_selected","detail":"1 candidate passed scoring"},
+  {"at":"2026-10-01T10:00:02.000Z","event":"dry_run_blocked_remote_publish","detail":"No FTP, WordPress or Google request made"}
+]

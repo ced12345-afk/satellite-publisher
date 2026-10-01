@@ -1,0 +1,11 @@
+{
+  "status": "needs_review",
+  "title": "How to add human review to an editorial automation workflow",
+  "summary": "Example output only. It is not based on or derived from a real article.",
+  "sections": [
+    {"heading": "Start with the decision", "body": "A review step should answer a clear editorial question."},
+    {"heading": "Log the rationale", "body": "Record approval, revisions and publication intent."}
+  ],
+  "sourcePolicy": "Topic signal only; no source wording or structure reused.",
+  "review": {"required": true, "reasons": ["Demonstration output requires human approval."]}
+}

@@ -1,0 +1,7 @@
+{
+  "id": "demo-site",
+  "name": "Example Editorial Site",
+  "contentProfile": "Practical, evidence-led analysis for marketing teams.",
+  "publishAdapter": "ftp",
+  "publishStatus": "preview_only"
+}

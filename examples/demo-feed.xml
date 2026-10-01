@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel><title>Example Industry Feed</title>
+  <item><title>How editorial teams validate automated briefs</title><link>https://industry.example/automated-briefs</link><description>A fictional short signal about review steps for editorial automation.</description><pubDate>Wed, 01 Oct 2026 10:00:00 GMT</pubDate></item>
+  <item><title>Search teams compare content opportunity scoring</title><link>https://industry.example/opportunity-scoring</link><description>A fictional short signal about prioritising research topics.</description><pubDate>Tue, 30 Sep 2026 10:00:00 GMT</pubDate></item>
+</channel></rss>
