@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseRss, deduplicate } from '../src/discovery/rss.mjs';
 import { requestWithRetry } from '../src/generation/openai.mjs';
+import { generateImage } from '../src/generation/image.mjs';
 import { validateDraft } from '../src/validation/safety.mjs';
 import { publish, notifyGoogleIndexing } from '../src/publishers/publisher.mjs';
 
@@ -17,6 +18,11 @@ test('retries a transient generation failure', async () => {
   let calls = 0;
   const value = await requestWithRetry(async () => { calls += 1; if (calls < 3) throw new Error('temporary'); return 'ok'; }, { delayMs: 0 });
   assert.equal(value, 'ok'); assert.equal(calls, 3);
+});
+test('surfaces a timeout after retries', async () => {
+  let calls = 0;
+  await assert.rejects(() => requestWithRetry(async () => { calls += 1; throw new Error('request timed out'); }, { retries: 2, delayMs: 0 }), /timed out/);
+  assert.equal(calls, 2);
 });
 test('empty article becomes needs_review', () => {
   assert.equal(validateDraft({ draft: {}, source: {} }).status, 'needs_review');
@@ -36,10 +42,9 @@ test('dry-run blocks indexing', async () => {
   assert.equal(result.status, 'skipped'); assert.equal(called, false);
 });
 test('image, FTP and WordPress failures are surfaced for human review', async () => {
+  await assert.rejects(() => generateImage({ prompt: 'demo', env: { OPENAI_API_KEY: 'test' }, fetchImpl: async () => ({ ok: false, status: 503, json: async () => ({ error: { message: 'Image generation failed' } }) }) }), /Image generation failed/);
   await assert.rejects(() => publish({ adapter: 'ftp', payload: {}, env: { DRY_RUN: 'false' }, transport: async () => { throw new Error('FTP inaccessible'); } }), /FTP inaccessible/);
   await assert.rejects(() => publish({ adapter: 'wordpress', payload: {}, env: { DRY_RUN: 'false' }, transport: async () => { throw new Error('WordPress inaccessible'); } }), /WordPress inaccessible/);
-  const imageFailure = { status: 'needs_review', reasons: ['Image generation failed; human review required.'] };
-  assert.equal(imageFailure.status, 'needs_review');
 });
 test('already published output remains a no-op in a caller-managed queue', () => {
   const published = new Set(['https://example.test/already']);

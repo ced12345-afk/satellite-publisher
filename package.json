@@ -7,7 +7,7 @@
   "scripts": {
     "demo": "node scripts/demo.mjs",
     "test": "node --test",
-    "lint": "node --check scripts/demo.mjs && node --check src/discovery/rss.mjs && node --check src/editorial/planner.mjs && node --check src/validation/safety.mjs && node --check src/publishers/publisher.mjs"
+    "lint": "node --check scripts/demo.mjs && node --check src/discovery/rss.mjs && node --check src/editorial/planner.mjs && node --check src/generation/image.mjs && node --check src/validation/safety.mjs && node --check src/publishers/publisher.mjs"
   },
   "engines": {
     "node": ">=20"
